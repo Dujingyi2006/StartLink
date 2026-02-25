@@ -4,6 +4,7 @@ import WishList from './components/WishList';
 import RecommendationList from './components/RecommendationList';
 import NextWishesView from './components/NextWishesView';
 import WishFormModal from './components/WishFormModal';
+import WishCompletionFlow from './components/WishCompletionFlow';
 import { wishAPI, recommendationAPI, graphAPI } from './services/api';
 
 function App() {
@@ -41,6 +42,10 @@ function App() {
   // 新增状态：控制愿望表单模态框
   const [showWishForm, setShowWishForm] = useState(false);
   const [editingWish, setEditingWish] = useState(null);
+
+  // 新增状态：控制愿望完成流程
+  const [showCompletionFlow, setShowCompletionFlow] = useState(false);
+  const [completingWish, setCompletingWish] = useState(null);
 
   useEffect(() => {
     // 注释掉 API 调用，使用模拟数据
@@ -110,11 +115,38 @@ function App() {
 
   const handleAcceptRecommendation = async (rec) => {
     try {
-      await wishAPI.createWish({
+      // 创建新愿望
+      const newWish = {
+        id: Date.now(),
         description: rec.description,
-        is_public: true
-      });
-      loadData();
+        status: 'pending',
+        priority: 'medium',
+        is_public: true,
+        created_at: new Date().toISOString()
+      };
+      setWishes([...wishes, newWish]);
+
+      // 移除已接受的推荐
+      const updatedRecommendations = recommendations.filter(r => r.id !== rec.id);
+
+      // 模拟算法推荐新的愿望来替代
+      const newRecommendations = [
+        { id: 201, description: '学习 Vue.js 3 组合式 API', score: 0.88, user_count: 142, completion_rate: 0.72 },
+        { id: 202, description: '掌握 Docker 容器化技术', score: 0.86, user_count: 178, completion_rate: 0.69 },
+        { id: 203, description: '深入理解 JavaScript 异步编程', score: 0.91, user_count: 201, completion_rate: 0.81 },
+        { id: 204, description: '学习 GraphQL API 设计', score: 0.84, user_count: 134, completion_rate: 0.67 },
+        { id: 205, description: '掌握 Tailwind CSS 实战技巧', score: 0.89, user_count: 167, completion_rate: 0.76 }
+      ];
+
+      // 随机选择一个新推荐
+      const randomRec = newRecommendations[Math.floor(Math.random() * newRecommendations.length)];
+      setRecommendations([...updatedRecommendations, randomRec]);
+
+      // await wishAPI.createWish({
+      //   description: rec.description,
+      //   is_public: true
+      // });
+      // loadData();
     } catch (error) {
       console.error('添加愿望失败:', error);
     }
@@ -122,6 +154,36 @@ function App() {
 
   const handleNodeClick = (wish) => {
     console.log('点击链条节点:', wish);
+  };
+
+  const handleWishComplete = (wish) => {
+    setCompletingWish(wish);
+    setShowCompletionFlow(true);
+  };
+
+  const handleSaveNextWish = async (formData) => {
+    try {
+      // 创建下一个愿望
+      const newWish = {
+        id: Date.now(),
+        ...formData,
+        status: 'pending',
+        created_at: new Date().toISOString()
+      };
+      setWishes([...wishes, newWish]);
+
+      // 更新完成的愿望状态
+      setWishes(wishes.map(w =>
+        w.id === completingWish.id
+          ? { ...w, status: 'completed', next_wish_id: newWish.id }
+          : w
+      ));
+
+      // await wishAPI.createWish(formData);
+      // await wishAPI.updateWish(completingWish.id, { status: 'completed', next_wish_id: newWish.id });
+    } catch (error) {
+      console.error('保存下一个愿望失败:', error);
+    }
   };
 
   if (loading) {
@@ -147,6 +209,7 @@ function App() {
                 wishes={wishes}
                 onWishClick={handleWishClick}
                 onCreateWish={handleCreateWish}
+                onComplete={handleWishComplete}
               />
             </section>
 
@@ -179,6 +242,17 @@ function App() {
         onSave={handleSaveWish}
         editingWish={editingWish}
       />
+
+      {/* 愿望完成流程 */}
+      <AnimatePresence>
+        {showCompletionFlow && completingWish && (
+          <WishCompletionFlow
+            completedWish={completingWish}
+            onClose={() => setShowCompletionFlow(false)}
+            onSaveNextWish={handleSaveNextWish}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

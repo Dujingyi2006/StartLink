@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Target, TrendingUp, CheckCircle2, Circle } from 'lucide-react';
 
-const WishCard = ({ wish, onClick }) => {
+const WishCard = ({ wish, onClick, onComplete }) => {
   const statusConfig = {
     pending: { icon: Circle, color: 'text-neumorphic-text', label: '待开始' },
     in_progress: { icon: TrendingUp, color: 'text-neumorphic-accent', label: '进行中' },
@@ -19,13 +19,19 @@ const WishCard = ({ wish, onClick }) => {
   const statusColor = statusConfig[wish.status]?.color || 'text-neumorphic-text';
   const statusLabel = statusConfig[wish.status]?.label || '未知';
 
+  const handleComplete = (e) => {
+    e.stopPropagation();
+    onComplete && onComplete(wish);
+  };
+
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className="bg-neumorphic-card rounded-2xl p-6 shadow-neu-md hover:shadow-neu-hover
-                 transition-all duration-300 cursor-pointer border border-neumorphic-border"
+                 transition-all duration-300 cursor-pointer border border-neumorphic-border
+                 relative"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-2">
@@ -56,6 +62,22 @@ const WishCard = ({ wish, onClick }) => {
           <Target className="w-4 h-4" />
           <span>已设置下一个愿望</span>
         </div>
+      )}
+
+      {/* 完成按钮 - 仅在未完成状态显示 */}
+      {wish.status !== 'completed' && (
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleComplete}
+          className="mt-4 w-full px-4 py-2 rounded-xl shadow-neu-sm hover:shadow-neu-hover
+                     bg-neumorphic-accent text-white text-sm font-medium
+                     border border-neumorphic-border transition-all
+                     flex items-center justify-center gap-2"
+        >
+          <CheckCircle2 className="w-4 h-4" />
+          <span>标记为完成</span>
+        </motion.button>
       )}
     </motion.div>
   );

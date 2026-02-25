@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import WishCard from './WishCard';
 import { Plus, Filter } from 'lucide-react';
 
-const WishList = ({ wishes, onWishClick, onCreateWish }) => {
+const WishList = ({ wishes, onWishClick, onCreateWish, onComplete }) => {
   const [filter, setFilter] = useState('all');
   const [filteredWishes, setFilteredWishes] = useState(wishes);
 
@@ -66,7 +66,7 @@ const WishList = ({ wishes, onWishClick, onCreateWish }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <WishCard wish={wish} onClick={() => onWishClick(wish)} />
+            <WishCard wish={wish} onClick={() => onWishClick(wish)} onComplete={onComplete} />
           </motion.div>
         ))}
       </div>

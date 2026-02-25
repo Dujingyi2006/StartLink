@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Users, TrendingUp, ArrowRight } from 'lucide-react';
 
 const RecommendationCard = ({ recommendation, onAccept }) => {
@@ -63,16 +63,20 @@ const RecommendationList = ({ recommendations, onAccept }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recommendations.map((rec, index) => (
-          <motion.div
-            key={rec.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <RecommendationCard recommendation={rec} onAccept={onAccept} />
-          </motion.div>
-        ))}
+        <AnimatePresence mode="popLayout">
+          {recommendations.map((rec, index) => (
+            <motion.div
+              key={rec.id}
+              initial={{ opacity: 0, y: 20, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
+              transition={{ delay: index * 0.1 }}
+              layout
+            >
+              <RecommendationCard recommendation={rec} onAccept={onAccept} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </div>
 
       {recommendations.length === 0 && (
