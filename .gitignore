@@ -1,0 +1,16 @@
+# 环境配置（含密码等敏感信息）
+.env
+config/*.yml
+config/*.json
+!config/example.json  # 保留示例配置，排除真实配置
+
+# 依赖包（Python/Java/Node.js示例）
+venv/          # Python虚拟环境
+node_modules/  # Node.js依赖
+target/        # Java Maven/Gradle编译产物
+*.jar          # Java包
+
+# 缓存/日志
+__pycache__/
+*.log
+logs/
