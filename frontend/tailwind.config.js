@@ -7,17 +7,24 @@ export default {
     extend: {
       colors: {
         neumorphic: {
-          light: '#e0e5ec',
-          dark: '#a3b1c6',
-          bg: '#e0e5ec'
+          light: '#FAF8F5',      // 温暖米白色
+          dark: '#B4AFA5',       // 温暖灰褐色
+          bg: '#F2EFE9',         // 燕麦色背景
+          card: '#E3E5DB',       // 浅豆沙绿卡片
+          text: '#2A2C2B',       // 深炭黑文本
+          accent: '#5A6B4F',     // 深邃复古绿
+          border: '#2A2C2B'      // 边框色
         }
       },
       boxShadow: {
-        'neu-sm': '4px 4px 8px #a3b1c6, -4px -4px 8px #ffffff',
-        'neu-md': '8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff',
-        'neu-lg': '12px 12px 24px #a3b1c6, -12px -12px 24px #ffffff',
-        'neu-inset': 'inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff',
-        'neu-hover': '6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff'
+        'neu-sm': '4px 4px 8px rgba(180, 175, 165, 0.4), -4px -4px 8px rgba(255, 255, 255, 0.7)',
+        'neu-md': '8px 8px 16px rgba(180, 175, 165, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.7)',
+        'neu-lg': '12px 12px 24px rgba(180, 175, 165, 0.4), -12px -12px 24px rgba(255, 255, 255, 0.7)',
+        'neu-inset': 'inset 4px 4px 8px rgba(180, 175, 165, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.7)',
+        'neu-hover': '6px 6px 12px rgba(180, 175, 165, 0.4), -6px -6px 12px rgba(255, 255, 255, 0.7)'
+      },
+      fontFamily: {
+        'serif': ['Playfair Display', 'Georgia', 'Noto Serif SC', 'serif'],
       }
     }
   },

@@ -8,27 +8,27 @@ const ChainNode = ({ wish, isActive, onClick }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
-      className={`relative bg-neumorphic-bg rounded-xl p-4 shadow-neu-md
-                  hover:shadow-neu-hover transition-all cursor-pointer
-                  ${isActive ? 'ring-2 ring-blue-500' : ''}`}
+      className={`relative bg-neumorphic-card rounded-xl p-4 shadow-neu-md
+                  hover:shadow-neu-hover transition-all cursor-pointer border border-neumorphic-border
+                  ${isActive ? 'ring-2 ring-neumorphic-accent' : ''}`}
     >
       <div className="flex items-center gap-2 mb-2">
         {wish.status === 'completed' ? (
-          <CheckCircle2 className="w-4 h-4 text-green-500" />
+          <CheckCircle2 className="w-4 h-4 text-green-700" />
         ) : (
-          <Target className="w-4 h-4 text-blue-500" />
+          <Target className="w-4 h-4 text-neumorphic-accent" />
         )}
-        <span className="text-xs font-medium text-gray-600">
+        <span className="text-xs font-medium text-neumorphic-text">
           {wish.status === 'completed' ? '已完成' : '进行中'}
         </span>
       </div>
 
-      <h4 className="text-sm font-semibold text-gray-800 line-clamp-2 mb-2">
+      <h4 className="text-sm font-semibold text-neumorphic-text line-clamp-2 mb-2">
         {wish.description}
       </h4>
 
       {wish.user_count && (
-        <div className="flex items-center gap-1 text-xs text-gray-500">
+        <div className="flex items-center gap-1 text-xs text-neumorphic-text opacity-70">
           <Users className="w-3 h-3" />
           <span>{wish.user_count} 人</span>
         </div>
@@ -48,8 +48,8 @@ const WishChainVisualization = ({ chains, onNodeClick }) => {
   return (
     <div className="w-full">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">愿望链条</h2>
-        <p className="text-gray-600">查看完成此愿望的用户们的下一步选择</p>
+        <h2 className="text-2xl font-bold text-neumorphic-text mb-2">愿望链条</h2>
+        <p className="text-neumorphic-text">查看完成此愿望的用户们的下一步选择</p>
       </div>
 
       <div className="space-y-8">
@@ -59,7 +59,7 @@ const WishChainVisualization = ({ chains, onNodeClick }) => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: chainIndex * 0.1 }}
-            className="bg-neumorphic-bg rounded-2xl p-6 shadow-neu-lg"
+            className="bg-neumorphic-card rounded-2xl p-6 shadow-neu-lg border border-neumorphic-border"
           >
             <div className="flex items-center gap-4 overflow-x-auto pb-4">
               {chain.wishes.map((wish, wishIndex) => (
@@ -79,7 +79,7 @@ const WishChainVisualization = ({ chains, onNodeClick }) => {
                       transition={{ delay: (chainIndex * 0.1) + (wishIndex * 0.05) }}
                       className="flex-shrink-0"
                     >
-                      <ArrowRight className="w-6 h-6 text-gray-400" />
+                      <ArrowRight className="w-6 h-6 text-neumorphic-text opacity-50" />
                     </motion.div>
                   )}
                 </React.Fragment>
@@ -87,15 +87,15 @@ const WishChainVisualization = ({ chains, onNodeClick }) => {
             </div>
 
             {chain.statistics && (
-              <div className="mt-4 pt-4 border-t border-gray-300 flex items-center gap-6 text-sm">
+              <div className="mt-4 pt-4 border-t border-neumorphic-border flex items-center gap-6 text-sm">
                 <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-gray-500" />
-                  <span className="text-gray-600">
+                  <Users className="w-4 h-4 text-neumorphic-text opacity-70" />
+                  <span className="text-neumorphic-text">
                     {chain.statistics.total_users} 人选择了这条路径
                   </span>
                 </div>
                 {chain.statistics.completion_rate && (
-                  <div className="text-gray-600">
+                  <div className="text-neumorphic-text">
                     完成率: {Math.round(chain.statistics.completion_rate * 100)}%
                   </div>
                 )}
@@ -106,10 +106,10 @@ const WishChainVisualization = ({ chains, onNodeClick }) => {
       </div>
 
       {chains.length === 0 && (
-        <div className="text-center py-12 bg-neumorphic-bg rounded-2xl shadow-neu-md">
-          <Target className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-500 text-lg">暂无愿望链条</p>
-          <p className="text-gray-400 text-sm mt-2">完成愿望并设置下一个目标来创建链条</p>
+        <div className="text-center py-12 bg-neumorphic-card rounded-2xl shadow-neu-md border border-neumorphic-border">
+          <Target className="w-12 h-12 text-neumorphic-text opacity-50 mx-auto mb-4" />
+          <p className="text-neumorphic-text text-lg">暂无愿望链条</p>
+          <p className="text-neumorphic-text text-sm mt-2 opacity-70">完成愿望并设置下一个目标来创建链条</p>
         </div>
       )}
     </div>

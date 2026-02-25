@@ -84,7 +84,7 @@ function App() {
   if (loading) {
     return (
       <div className="min-h-screen bg-neumorphic-bg flex items-center justify-center">
-        <div className="text-gray-600 text-lg">加载中...</div>
+        <div className="text-neumorphic-text text-lg">加载中...</div>
       </div>
     );
   }
@@ -93,8 +93,8 @@ function App() {
     <div className="min-h-screen bg-neumorphic-bg pb-20">
       <div className="container mx-auto px-4 py-8">
         <header className="mb-16">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">StartLink</h1>
-          <p className="text-gray-600">愿望管理与推荐系统</p>
+          <h1 className="text-4xl font-bold text-neumorphic-text mb-2">StartLink</h1>
+          <p className="text-neumorphic-text">愿望管理与推荐系统</p>
         </header>
 
         <div className="space-y-20">

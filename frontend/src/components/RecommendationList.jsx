@@ -8,24 +8,25 @@ const RecommendationCard = ({ recommendation, onAccept }) => {
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.03 }}
-      className="bg-neumorphic-bg rounded-2xl p-6 shadow-neu-md hover:shadow-neu-hover
-                 transition-all duration-300"
+      className="bg-neumorphic-card rounded-2xl p-6 shadow-neu-md hover:shadow-neu-hover
+                 transition-all duration-300 border border-neumorphic-border"
     >
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-yellow-500" />
-          <span className="text-sm font-medium text-gray-700">为你推荐</span>
+          <Sparkles className="w-5 h-5 text-yellow-700" />
+          <span className="text-sm font-medium text-neumorphic-text">为你推荐</span>
         </div>
-        <div className="px-3 py-1 rounded-lg shadow-neu-sm text-xs font-medium text-blue-600">
+        <div className="px-3 py-1 rounded-lg shadow-neu-sm text-xs font-medium text-neumorphic-accent
+                        border border-neumorphic-border bg-neumorphic-light">
           匹配度 {Math.round(recommendation.score * 100)}%
         </div>
       </div>
 
-      <h3 className="text-lg font-semibold text-gray-800 mb-3">
+      <h3 className="text-lg font-semibold text-neumorphic-text mb-3">
         {recommendation.description}
       </h3>
 
-      <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
+      <div className="flex items-center gap-4 mb-4 text-sm text-neumorphic-text">
         <div className="flex items-center gap-1">
           <Users className="w-4 h-4" />
           <span>{recommendation.user_count || 0} 人有此愿望</span>
@@ -44,7 +45,7 @@ const RecommendationCard = ({ recommendation, onAccept }) => {
         onClick={() => onAccept(recommendation)}
         className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl
                    shadow-neu-md hover:shadow-neu-hover transition-all
-                   bg-gradient-to-r from-blue-500 to-purple-500 text-white font-medium"
+                   bg-neumorphic-accent text-white font-medium border border-neumorphic-border"
       >
         <span>添加到我的愿望</span>
         <ArrowRight className="w-4 h-4" />
@@ -57,8 +58,8 @@ const RecommendationList = ({ recommendations, onAccept }) => {
   return (
     <div className="w-full">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">个性化推荐</h2>
-        <p className="text-gray-600">基于你的兴趣和相似用户的选择</p>
+        <h2 className="text-2xl font-bold text-neumorphic-text mb-2">个性化推荐</h2>
+        <p className="text-neumorphic-text">基于你的兴趣和相似用户的选择</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -76,9 +77,9 @@ const RecommendationList = ({ recommendations, onAccept }) => {
 
       {recommendations.length === 0 && (
         <div className="text-center py-12">
-          <Sparkles className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-500 text-lg">暂无推荐内容</p>
-          <p className="text-gray-400 text-sm mt-2">多浏览一些愿望，我们会为你推荐更多内容</p>
+          <Sparkles className="w-12 h-12 text-neumorphic-text mx-auto mb-4 opacity-50" />
+          <p className="text-neumorphic-text text-lg">暂无推荐内容</p>
+          <p className="text-neumorphic-text text-sm mt-2 opacity-70">多浏览一些愿望，我们会为你推荐更多内容</p>
         </div>
       )}
     </div>
