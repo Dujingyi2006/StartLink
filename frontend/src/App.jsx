@@ -3,6 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import WishList from './components/WishList';
 import RecommendationList from './components/RecommendationList';
 import NextWishesView from './components/NextWishesView';
+import WishFormModal from './components/WishFormModal';
 import { wishAPI, recommendationAPI, graphAPI } from './services/api';
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
   const [showNextWishes, setShowNextWishes] = useState(false);
   const [currentWish, setCurrentWish] = useState(null);
   const [nextWishes, setNextWishes] = useState([]);
+
+  // 新增状态：控制愿望表单模态框
+  const [showWishForm, setShowWishForm] = useState(false);
+  const [editingWish, setEditingWish] = useState(null);
 
   useEffect(() => {
     // 注释掉 API 调用，使用模拟数据
@@ -77,7 +82,30 @@ function App() {
   };
 
   const handleCreateWish = () => {
-    console.log('创建新愿望');
+    setEditingWish(null);
+    setShowWishForm(true);
+  };
+
+  const handleSaveWish = async (formData) => {
+    try {
+      if (editingWish) {
+        // 编辑现有愿望
+        await wishAPI.updateWish(editingWish.id, formData);
+        setWishes(wishes.map(w => w.id === editingWish.id ? { ...w, ...formData } : w));
+      } else {
+        // 创建新愿望
+        const newWish = {
+          id: Date.now(),
+          ...formData,
+          status: 'pending',
+          created_at: new Date().toISOString()
+        };
+        setWishes([...wishes, newWish]);
+        // await wishAPI.createWish(formData);
+      }
+    } catch (error) {
+      console.error('保存愿望失败:', error);
+    }
   };
 
   const handleAcceptRecommendation = async (rec) => {
@@ -143,6 +171,14 @@ function App() {
           />
         )}
       </AnimatePresence>
+
+      {/* 愿望表单模态框 */}
+      <WishFormModal
+        isOpen={showWishForm}
+        onClose={() => setShowWishForm(false)}
+        onSave={handleSaveWish}
+        editingWish={editingWish}
+      />
     </>
   );
 }
