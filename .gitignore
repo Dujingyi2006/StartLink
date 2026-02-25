@@ -14,3 +14,6 @@ target/        # Java Maven/Gradle编译产物
 __pycache__/
 *.log
 logs/
+
+# Claude Code 本地设置
+.claude/
