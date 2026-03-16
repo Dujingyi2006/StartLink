@@ -3,8 +3,7 @@
     "allow": [
       "Bash(export PATH=\"/c/Program Files/PostgreSQL/18/bin:$PATH\")",
       "Bash(echo $PATH)",
-      "Bash(curl -X GET \"http://localhost:3000/api/recommendations?limit=10\" -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc3MTk3OTk5MCwiZXhwIjoxNzcyNTg0NzkwfQ.Dhv7ME4aWai74MqTOX5UCvE7A8fG3NJNYMdyYG1Xwyo\")",
-      "mcp__playwright__playwright_get_visible_html",
+      "Bash(curl -X GET \"http://localhost:3000/api/recommendations?limit=10\" -H \"Authorization: 【】
       "mcp__playwright__playwright_close",
       "mcp__playwright__playwright_evaluate",
       "mcp__playwright__playwright_screenshot",
